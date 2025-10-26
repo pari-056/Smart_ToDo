@@ -12,7 +12,7 @@ export default function Register() {
     e.preventDefault();
     try {
       await axios.post("/api/auth/register", { email, password });
-      setMsg("Registered! Try logging in.");
+      setMsg("Thank you for registering! Redirecting you to login...");
       setEmail(""); setPassword("");
       setTimeout(() => navigate("/login"), 1500);
     } catch (err) {

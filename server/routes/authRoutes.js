@@ -56,7 +56,13 @@ authRouter.post('/login', async (req, res) => {
 
   try {
     const user = await User.findOne({ email });
-    if (!user || !(await bcrypt.compare(password, user.password))) {
+    if (!user) {
+      // Email not found in the database
+      return res.status(401).json({ error: "Email does not exist in the database" });
+    }
+    const passwordMatches = await bcrypt.compare(password, user.password);
+    if (!passwordMatches) {
+      // Password exists, but it's incorrect
       return res.status(401).json({ error: "Invalid credentials!!" });
     }
 

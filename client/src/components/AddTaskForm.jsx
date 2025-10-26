@@ -27,7 +27,7 @@ export default function AddTaskForm({ onAdd }) {
     }
     const deadlineDate = new Date(form.deadline);
     if (isNaN(deadlineDate.getTime()) || deadlineDate <= new Date()) {
-      setError("Deadline must be a valid future date and time.");
+      setError("Give a valid future deadline for the task.");
       return;
     }
     setError("");
