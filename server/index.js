@@ -16,10 +16,8 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 
-// Connect to DB
 connectDB();
 
-// Route mounting - only once per path
 app.use('/api/auth', authRouter);
 app.use('/api/tasks', authMiddleware, taskRouter);
 

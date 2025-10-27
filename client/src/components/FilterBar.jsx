@@ -6,8 +6,7 @@ const statuses = ["All", "Pending", "Completed", "Overdue"];
 const sortOptions = [
   { value: "deadline", label: "Deadline" },
   { value: "priority", label: "Priority" },
-  { value: "createdAt", label: "Created Date" },
-  { value: "title", label: "Alphabetical" }
+  { value: "alphabetical", label: "Alphabetical" } // Rename for clarity
 ];
 
 export default function FilterBar({ filter, setFilter, sortBy, setSortBy }) {

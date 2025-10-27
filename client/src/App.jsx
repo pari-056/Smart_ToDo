@@ -29,7 +29,7 @@ export default function App() {
     if (filter.category !== "All") queryParams.push(`category=${filter.category}`);
     if (filter.priority !== "All") queryParams.push(`priority=${filter.priority}`);
     if (filter.status !== "All") queryParams.push(`status=${filter.status.toLowerCase()}`);
-    if (sortBy) queryParams.push(`sortBy=${sortBy}`);
+    // No sortBy in query params since sorting is done frontend now!
     const queryString = queryParams.length ? `?${queryParams.join("&")}` : "";
 
     try {
@@ -46,7 +46,27 @@ export default function App() {
 
   useEffect(() => {
     fetchTasks();
-  }, [filter, sortBy, isAuthenticated]);
+    // eslint-disable-next-line
+  }, [filter, isAuthenticated]);
+
+  // --- Sort tasks array on frontend based on sortBy selection
+  const getSortedTasks = () => {
+    let sorted = [...tasks];
+    if (sortBy === "priority") {
+      // Map priorities to numbers; lower is higher priority
+      const priorityOrder = { High: 1, Medium: 2, Low: 3, Critical: 0 };
+      sorted.sort((a, b) => {
+        const aVal = priorityOrder[a.priority] ?? 99;
+        const bVal = priorityOrder[b.priority] ?? 99;
+        return aVal - bVal;
+      });
+    } else if (sortBy === "alphabetical") {
+      sorted.sort((a, b) => (a.title || "").localeCompare(b.title || ""));
+    } else if (sortBy === "deadline") {
+      sorted.sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
+    }
+    return sorted;
+  };
 
   const addTask = async (task) => {
     try {
@@ -75,7 +95,6 @@ export default function App() {
     }
   };
 
-  // New delete all tasks function
   const deleteAllTasks = async () => {
     if (!window.confirm("Are you sure you want to delete all your tasks?")) return;
     try {
@@ -112,8 +131,18 @@ export default function App() {
                   element={
                     <>
                       {showAddForm && <AddTaskForm onAdd={addTask} />}
-                      <FilterBar filter={filter} setFilter={setFilter} sortBy={sortBy} setSortBy={setSortBy} />
-                      <TaskList tasks={tasks} onUpdate={updateTask} onDelete={deleteTask} onDeleteAll={deleteAllTasks} />
+                      <FilterBar
+                        filter={filter}
+                        setFilter={setFilter}
+                        sortBy={sortBy}
+                        setSortBy={setSortBy}
+                      />
+                      <TaskList
+                        tasks={getSortedTasks()}
+                        onUpdate={updateTask}
+                        onDelete={deleteTask}
+                        onDeleteAll={deleteAllTasks}
+                      />
                     </>
                   }
                 />
@@ -124,7 +153,6 @@ export default function App() {
             )}
           </Routes>
         </main>
-
         {isAuthenticated && <Footer completed={tasks.filter(t => t.completed).length} total={tasks.length} />}
       </div>
     </Router>

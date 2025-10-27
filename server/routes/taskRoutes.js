@@ -28,10 +28,7 @@ taskRouter.get("/", async (req, res) => {
 
     if (sortBy === "deadline") {
       query = query.sort({ deadline: 1 });
-    } else if (sortBy === "priority") {
-      // Sorting by priority string directly is not ideal
-      // You can add a numeric field 'priorityValue' to the schema for better sorting if needed
-    }
+    } 
 
     const tasks = await query.exec();
     res.json(tasks);
