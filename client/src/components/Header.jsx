@@ -20,7 +20,7 @@ export default function Header({ onAdd, showAddForm, taskCount, isAuthenticated,
       <div className="flex items-center gap-3">
         <img src="/logo.svg" alt="Logo" className="h-8 w-8" />
         <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">
-          Smart To‑Do List
+          TaskFlow
         </h1>
         {location.pathname === "/" && (
           <span className="ml-2 text-xs font-semibold px-2 py-1 rounded bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-100">

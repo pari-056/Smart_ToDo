@@ -4,10 +4,10 @@ export default function About() {
   return (
     <section className="px-6 py-10 md:px-16 text-gray-800 dark:text-gray-200">
       <h1 className="text-3xl font-bold mb-4 text-indigo-600 dark:text-indigo-400">
-        About Smart To‑Do List
+        About TaskFlow
       </h1>
       <p className="text-lg mb-4 leading-relaxed">
-        Smart To‑Do List helps you stay productive with clean UI, dark mode support, 
+        TaskFlow helps you stay productive with clean UI, dark mode support, 
         filtered task management, and real‑time progress tracking.
       </p>
       <p className="text-md mb-3">
